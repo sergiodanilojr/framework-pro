@@ -18,3 +18,7 @@ if (!function_exists('route')) {
         $route = app()->get(RouterInterface::class);
     }
 }
+
+if(!function_exists('env')){
+    
+}

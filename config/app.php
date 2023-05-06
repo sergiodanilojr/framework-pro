@@ -2,7 +2,9 @@
 
 return [
     'name' => '',
-    'route_dir' => __DIR__ . '/../routes',
+    'route_dir' => realpath(__DIR__ . '/../routes'),
 
     'providers' => [],
+    
+    'aliases' => [],
 ];

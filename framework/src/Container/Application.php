@@ -2,18 +2,22 @@
 
 namespace Framework\Container;
 
-use League\Container\Argument\Literal\ObjectArgument;
+use Framework\Support\Config\Config;
 use League\Container\Container;
 
 class Application extends Container
 {
     protected bool $bootstrapped = false;
     protected string $configPath = 'config';
+    protected string $routePath = 'routes';
+    protected string $environmentFilePath;
+    protected string $environmentFile = '.env';
 
     public function __construct(
         protected string $basePath
     ) {
         parent::__construct();
+        $this->defaultToShared();
     }
 
     public function getBasePath()
@@ -42,6 +46,26 @@ class Application extends Container
             $this->configPath = $path;
         }
 
-        return $this->basePath . '/' . $this->configPath;
+        return $this->basePath . DIRECTORY_SEPARATOR . $this->configPath;
+    }
+
+    public function routePath($path = '')
+    {
+        $config = $this->get(Config::class);
+        return realpath($config->get('app')['route_dir']);
+    }
+
+    public function environmentFile()
+    {
+        return $this->environmentFile;
+    }
+
+    public function environmentFilePath(string $path = '')
+    {
+        if (!empty($path)) {
+            $this->environmentFilePath = $path;
+        }
+
+        return $this->getBasePath() . DIRECTORY_SEPARATOR . $this->environmentFile();
     }
 }

@@ -14,13 +14,10 @@ class Router implements RouterInterface
 {
     protected array $routes = [];
 
-    public function __construct()
-    {
-        $this->mapRoutes();
-    }
-
     public function dispatch(Request $request, ContainerInterface $container)
     {
+        $this->mapRoutes($container);
+
         [$handler, $vars] = $this->extractInfo($request);
 
         if (is_array($handler)) {
@@ -82,13 +79,14 @@ class Router implements RouterInterface
         });
     }
 
-    protected function mapRoutes()
+    protected function mapRoutes(ContainerInterface $app)
     {
-        $routeDir = scandir(BASE_PATH . '/routes');
+        $routeDir = $app->routePath();
+        $scandir = scandir($routeDir);
 
-        foreach ($routeDir as $fileRoute) {
+        foreach ($scandir as $fileRoute) {
 
-            $fileRoute = BASE_PATH . "/routes/" . $fileRoute;
+            $fileRoute = $routeDir . DIRECTORY_SEPARATOR . $fileRoute;
 
             if (is_file($fileRoute)) {
                 $routes = require_once $fileRoute;

@@ -10,7 +10,7 @@ class LoadConfiguration
 {
     public function bootstrap(Application $app)
     { 
-        $config= $app->get(Config::class);
+        $config = $app->get(Config::class);
         
         $files = $this->getConfigurationFiles($app);
 
@@ -21,7 +21,6 @@ class LoadConfiguration
         foreach ($files as $name => $value) {
             $config->set($name, require $value);
         }
-
     }
 
     protected function getConfigurationFiles(Application $app)
