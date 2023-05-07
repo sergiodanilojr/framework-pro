@@ -4,6 +4,7 @@ namespace Framework\Http;
 
 use Framework\Bootstrap\LoadConfiguration;
 use Framework\Bootstrap\LoadEnvironmentVariables;
+use Framework\Bootstrap\RegisterProviders;
 use Framework\Routing\RouterInterface;
 use Framework\Support\Config\Config;
 use Psr\Container\ContainerInterface;
@@ -14,6 +15,7 @@ class Kernel
     protected $bootstrappers = [
         LoadEnvironmentVariables::class,
         LoadConfiguration::class,
+        RegisterProviders::class,
     ];
 
     public function __construct(
@@ -25,6 +27,7 @@ class Kernel
 
     public function handle(Request $request): Response
     {
+        // dd($this->container);
         try {
             [$routeHandler, $vars] = $this->router->dispatch($request, $this->container);
 

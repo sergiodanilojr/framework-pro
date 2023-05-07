@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Framework\Http\Controller;
 use Framework\Http\Response;
+use Framework\Routing\RouterInterface;
 use Framework\Support\Config\Config;
-use Psr\Container\ContainerInterface;
+use Framework\Support\Config\ConfigInterface;
+use Framework\Support\Config\EnvInterface;
 
-class HomeController
+class HomeController extends Controller
 {
     public function __construct(
-        protected Config $config,
+        protected ConfigInterface $config,
+        protected EnvInterface $env,
+        protected RouterInterface $router,
     )
     {
         
@@ -18,9 +23,8 @@ class HomeController
     public function index():Response
     {
         $content = "<h1>Simbora Dev!</h1>";
-
-        dd( $this->config);
-
+        $env = $this->env->get('APP_USER');
+        
         return new Response($content);
     }
 }

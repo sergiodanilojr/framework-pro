@@ -3,6 +3,7 @@
 namespace Framework\Container;
 
 use Framework\Support\Config\Config;
+use Framework\Support\Config\ConfigInterface;
 use League\Container\Container;
 
 class Application extends Container
@@ -17,7 +18,6 @@ class Application extends Container
         protected string $basePath
     ) {
         parent::__construct();
-        $this->defaultToShared();
     }
 
     public function getBasePath()
@@ -51,7 +51,7 @@ class Application extends Container
 
     public function routePath($path = '')
     {
-        $config = $this->get(Config::class);
+        $config = $this->get(ConfigInterface::class);
         return realpath($config->get('app')['route_dir']);
     }
 

@@ -5,12 +5,15 @@ namespace Framework\Bootstrap;
 use Exception;
 use Framework\Container\Application;
 use Framework\Support\Config\Config;
+use Framework\Support\Config\ConfigInterface;
 
 class LoadConfiguration
 {
     public function bootstrap(Application $app)
     { 
-        $config = $app->get(Config::class);
+        $app->add(ConfigInterface::class, Config::class);
+
+        $config = $app->get(ConfigInterface::class);
         
         $files = $this->getConfigurationFiles($app);
 

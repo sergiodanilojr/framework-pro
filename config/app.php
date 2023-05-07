@@ -1,10 +1,17 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+
 return [
     'name' => '',
-    'route_dir' => realpath(__DIR__ . '/../routes'),
-
-    'providers' => [],
     
+    'env' => '',
+
+    'route_dir' => __DIR__ . '/../routes',
+
+    'providers' => [
+       AppServiceProvider::class
+    ],
+
     'aliases' => [],
 ];

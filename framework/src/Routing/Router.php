@@ -18,7 +18,7 @@ class Router implements RouterInterface
     {
         $this->mapRoutes($container);
 
-        [$handler, $vars] = $this->extractInfo($request);
+        [$handler, $vars] = $this->extractInfo($request, $container);
 
         if (is_array($handler)) {
             [$controllerId, $method] = $handler;
@@ -29,7 +29,7 @@ class Router implements RouterInterface
         return [$handler, $vars];
     }
 
-    protected function extractInfo(Request $request): array
+    protected function extractInfo(Request $request, ContainerInterface $container): array
     {
         $routeInfo =  $this->dispatcher()->dispatch(
             $request->method(),
@@ -46,7 +46,7 @@ class Router implements RouterInterface
                 return [$handler, $arguments];
             }
         };
-
+ 
         return $info();
     }
 

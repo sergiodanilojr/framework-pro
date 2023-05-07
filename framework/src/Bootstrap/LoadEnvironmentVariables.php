@@ -30,7 +30,7 @@ class LoadEnvironmentVariables
         $app->add(
             EnvInterface::class,
             Env::class
-        );
+        )->setShared(true);
 
         return $app->get(EnvInterface::class);
     }

@@ -4,14 +4,16 @@ use Framework\Container\Application;
 use Framework\Http\Kernel;
 use Framework\Routing\Router;
 use Framework\Routing\RouterInterface;
+use Framework\Support\Config\Env;
+use Framework\Support\Config\EnvInterface;
 use League\Container\Argument\Literal\ObjectArgument;
 use League\Container\ReflectionContainer;
 
 require __DIR__ . '/../framework/vendor/autoload.php';
 
-$app = new Application(
+$app = (new Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
-);
+));
 
 $app->delegate(new ReflectionContainer(true));
 
@@ -24,10 +26,14 @@ $app->delegate(new ReflectionContainer(true));
 $app->add(
     RouterInterface::class,
     Router::class
-);
+)
+    ->setShared(true);
 
 $app->add(Kernel::class)
     ->addArgument(RouterInterface::class)
-    ->addArgument($app);
+    ->addArgument($app)
+    ->setShared(true);
+
+$app->defaultToShared();
 
 return $app;
