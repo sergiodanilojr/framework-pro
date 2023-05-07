@@ -26,8 +26,7 @@ $app->delegate(new ReflectionContainer(true));
 $app->add(
     RouterInterface::class,
     Router::class
-)
-    ->setShared(true);
+)->setShared(true);
 
 $app->add(Kernel::class)
     ->addArgument(RouterInterface::class)
