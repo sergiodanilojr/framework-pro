@@ -10,24 +10,16 @@ use Framework\Support\Config\Config;
 use Psr\Container\ContainerInterface;
 
 
-class Kernel
+class Kernel implements KernelInterface
 {
-    protected $bootstrappers = [
-        LoadEnvironmentVariables::class,
-        LoadConfiguration::class,
-        RegisterProviders::class,
-    ];
-
     public function __construct(
         protected RouterInterface $router,
         protected ContainerInterface $container
     ) {
-        $this->bootstrapContainer();
     }
 
     public function handle(Request $request): Response
     {
-        // dd($this->container);
         try {
             [$routeHandler, $vars] = $this->router->dispatch($request, $this->container);
 

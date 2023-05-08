@@ -17,22 +17,20 @@ class LoadEnvironmentVariables
 
     protected function populateEnvRepository(ContainerInterface $app)
     {
-        $repository = $this->addEnvRepositoryToContainer($app);
+        $this->addEnvRepositoryToContainer($app);
         $envs = $this->getEnvironmentVariables($app);
 
         foreach ($envs as $env => $value) {
-            $repository->set($env, $value);
+            $app->get(EnvInterface::class)->set($env, $value);
         }
     }
 
     protected function addEnvRepositoryToContainer(ContainerInterface $app)
     {
-        $app->add(
+        $app->addShared(
             EnvInterface::class,
             Env::class
-        )->setShared(true);
-
-        return $app->get(EnvInterface::class);
+        );
     }
 
     protected function getEnvironmentVariables(ContainerInterface $app)

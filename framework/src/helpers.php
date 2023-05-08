@@ -8,8 +8,6 @@ use Framework\Support\Config\EnvInterface;
 if (!function_exists('app')) {
     function app()
     {
-        //return new Application();
-
        return require __DIR__ . '/../../bootstrap/app.php';
     }
 }

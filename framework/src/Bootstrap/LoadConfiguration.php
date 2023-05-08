@@ -6,15 +6,14 @@ use Exception;
 use Framework\Container\Application;
 use Framework\Support\Config\Config;
 use Framework\Support\Config\ConfigInterface;
+use ReflectionClass;
 
 class LoadConfiguration
 {
     public function bootstrap(Application $app)
-    { 
-        $app->add(ConfigInterface::class, Config::class);
+    {
+        $app->addShared(ConfigInterface::class, Config::class);
 
-        $config = $app->get(ConfigInterface::class);
-        
         $files = $this->getConfigurationFiles($app);
 
         if (!isset($files['app'])) {
@@ -22,7 +21,7 @@ class LoadConfiguration
         }
 
         foreach ($files as $name => $value) {
-            $config->set($name, require $value);
+            $app->get(ConfigInterface::class)->set($name, require $value);
         }
     }
 

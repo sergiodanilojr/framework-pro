@@ -2,8 +2,12 @@
 
 namespace Framework\Container;
 
+use Framework\Bootstrap\LoadConfiguration;
+use Framework\Bootstrap\LoadEnvironmentVariables;
+use Framework\Bootstrap\RegisterProviders;
 use Framework\Support\Config\Config;
 use Framework\Support\Config\ConfigInterface;
+use League\Container\Argument\Literal\StringArgument;
 use League\Container\Container;
 
 class Application extends Container
@@ -14,10 +18,18 @@ class Application extends Container
     protected string $environmentFilePath;
     protected string $environmentFile = '.env';
 
+    protected $bootstrappers = [
+        LoadEnvironmentVariables::class,
+        LoadConfiguration::class,
+        RegisterProviders::class,
+    ];
+
     public function __construct(
         protected string $basePath
     ) {
         parent::__construct();
+
+        $this->addShared('basePath', new StringArgument(realpath($this->basePath)));
     }
 
     public function getBasePath()
@@ -30,14 +42,17 @@ class Application extends Container
         return $this->bootstrapped;
     }
 
+    public function bootstrap():void
+    {
+        $this->bootstrapWith($this->bootstrappers);
+    }
+
     public function bootstrapWith(array $bootstrappers): void
     {
         foreach ($bootstrappers as $bootstrapper) {
             $this->add($bootstrapper);
             $this->get($bootstrapper)->bootstrap($this);
         }
-
-        $this->bootstrapped = true;
     }
 
     public function configPath($path = '')

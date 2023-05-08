@@ -11,20 +11,14 @@ use Framework\Support\Config\EnvInterface;
 
 class HomeController extends Controller
 {
-    public function __construct(
-        protected ConfigInterface $config,
-        protected EnvInterface $env,
-        protected RouterInterface $router,
-    )
+    public function __construct()
     {
-        
     }
 
-    public function index():Response
+    public function index(): Response
     {
-        $content = "<h1>Simbora Dev!</h1>";
-        $env = $this->env->get('APP_USER');
-        
-        return new Response($content);
+        return $this->render('website/home.html.twig', [
+            'name' => 'Bagual',
+        ]);
     }
 }
