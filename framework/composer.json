@@ -24,7 +24,8 @@
         "psr/container": "2.0.x-dev",
         "league/container": "^4.0.0",
         "vlucas/phpdotenv": "5.5.x-dev",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "doctrine/dbal": "^3.6"
         
     },
     "require-dev": {

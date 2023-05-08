@@ -1,18 +1,20 @@
 <?php
 
 use App\Providers\AppServiceProvider;
+use Framework\ServiceProvider\DatabaseConnectionServiceProvider;
 use Framework\ServiceProvider\ViewServiceProvider;
 
 return [
-    'name' => '',
+    'name' => env('APP_ENV'),
 
-    'env' => '',
+    'env' => env('APP_ENVIRONTMENT'),
 
-    'route_dir' => __DIR__ . '/../routes',
+    'route_dir' => realpath(__DIR__ . '/../routes'),
 
     'providers' => [
         AppServiceProvider::class,
         ViewServiceProvider::class,
+        DatabaseConnectionServiceProvider::class,
     ],
 
     'aliases' => [],

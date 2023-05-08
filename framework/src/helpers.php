@@ -1,9 +1,6 @@
 <?php
 
-use Framework\Container\Application;
 use Framework\Routing\RouterInterface;
-use Framework\Support\Config\Env;
-use Framework\Support\Config\EnvInterface;
 
 if (!function_exists('app')) {
     function app()
@@ -22,6 +19,10 @@ if (!function_exists('route')) {
 if(!function_exists('env')){
     function env(string $key)
     {
-        return app()->get(EnvInterface::class);
+        if(!array_key_exists($key, $_ENV)){
+            return null;
+        }
+
+        return $_ENV[$key];
     }
 }

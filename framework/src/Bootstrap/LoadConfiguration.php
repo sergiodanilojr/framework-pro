@@ -12,7 +12,10 @@ class LoadConfiguration
 {
     public function bootstrap(Application $app)
     {
-        $app->addShared(ConfigInterface::class, Config::class);
+        $app->add(ConfigInterface::class, Config::class);
+       
+        
+       
 
         $files = $this->getConfigurationFiles($app);
 
