@@ -3,6 +3,8 @@
 use Framework\Container\Application;
 use Framework\Facades\FacadeFactory;
 use Framework\Http\Kernel;
+use Framework\Console\KernelInterface as ConsoleKernelInterface;
+use Framework\Console\Kernel as ConsoleKernel;
 use Framework\Routing\Router;
 use Framework\Routing\RouterInterface;
 use Framework\Support\Config\Config;
@@ -36,10 +38,10 @@ $app
     ->addArgument(RouterInterface::class)
     ->addArgument($app);
 
-$app->get(
-    KernelInterface::class,
-    Kernel::class
-);
+$app->add(
+    ConsoleKernelInterface::class,
+    ConsoleKernel::class
+)->addArgument($app);
 
 FacadeFactory::setContainer($app);
 

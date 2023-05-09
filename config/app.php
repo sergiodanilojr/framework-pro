@@ -1,6 +1,7 @@
 <?php
 
 use App\Providers\AppServiceProvider;
+use Framework\ServiceProvider\ConsoleServiceProvider;
 use Framework\ServiceProvider\DatabaseConnectionServiceProvider;
 use Framework\ServiceProvider\ViewServiceProvider;
 
@@ -15,6 +16,7 @@ return [
         AppServiceProvider::class,
         ViewServiceProvider::class,
         DatabaseConnectionServiceProvider::class,
+        ConsoleServiceProvider::class,
     ],
 
     'aliases' => [],
